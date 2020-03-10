@@ -17,6 +17,9 @@
 		8B16413424180D8F0040EF74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B16413224180D8F0040EF74 /* LaunchScreen.storyboard */; };
 		8B16413F24180D900040EF74 /* RecipleaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B16413E24180D900040EF74 /* RecipleaseTests.swift */; };
 		8B16414A24180D900040EF74 /* RecipleaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B16414924180D900040EF74 /* RecipleaseUITests.swift */; };
+		8BE5F4BA2418175900A6154B /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BE5F4B92418175900A6154B /* Search.storyboard */; };
+		8BE5F4BC2418176E00A6154B /* History.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BE5F4BB2418176E00A6154B /* History.storyboard */; };
+		8BE5F4BE2418177900A6154B /* Favorite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BE5F4BD2418177900A6154B /* Favorite.storyboard */; };
 		8F287ED5B2B9BCDEF1544B4B /* Pods_Reciplease_RecipleaseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9487D67095EC26D22193CD05 /* Pods_Reciplease_RecipleaseTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +59,9 @@
 		8B16414524180D900040EF74 /* RecipleaseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipleaseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B16414924180D900040EF74 /* RecipleaseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipleaseUITests.swift; sourceTree = "<group>"; };
 		8B16414B24180D900040EF74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BE5F4B92418175900A6154B /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
+		8BE5F4BB2418176E00A6154B /* History.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = History.storyboard; sourceTree = "<group>"; };
+		8BE5F4BD2418177900A6154B /* Favorite.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Favorite.storyboard; sourceTree = "<group>"; };
 		9487D67095EC26D22193CD05 /* Pods_Reciplease_RecipleaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Reciplease_RecipleaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A65DEB557C775C7B3745FE84 /* Pods_Reciplease.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Reciplease.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCCF9EE7174792C7A6640801 /* Pods-Reciplease.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reciplease.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Reciplease/Pods-Reciplease.debug.xcconfig"; sourceTree = "<group>"; };
@@ -124,13 +130,14 @@
 		8B16412324180D8D0040EF74 /* Reciplease */ = {
 			isa = PBXGroup;
 			children = (
+				8B16413524180D8F0040EF74 /* Info.plist */,
 				8B16412424180D8D0040EF74 /* AppDelegate.swift */,
 				8B16412624180D8D0040EF74 /* SceneDelegate.swift */,
-				8B16412824180D8D0040EF74 /* ViewController.swift */,
-				8B16412A24180D8D0040EF74 /* Main.storyboard */,
-				8B16413024180D8F0040EF74 /* Assets.xcassets */,
-				8B16413224180D8F0040EF74 /* LaunchScreen.storyboard */,
-				8B16413524180D8F0040EF74 /* Info.plist */,
+				8BE5F4B42418161300A6154B /* Main */,
+				8BE5F4B62418161900A6154B /* Search */,
+				8BE5F4B7241816B000A6154B /* History */,
+				8BE5F4B8241816B300A6154B /* Favorite */,
+				8BE5F4B52418161600A6154B /* Resources */,
 				8B16412D24180D8D0040EF74 /* Reciplease.xcdatamodeld */,
 			);
 			path = Reciplease;
@@ -152,6 +159,48 @@
 				8B16414B24180D900040EF74 /* Info.plist */,
 			);
 			path = RecipleaseUITests;
+			sourceTree = "<group>";
+		};
+		8BE5F4B42418161300A6154B /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				8B16412824180D8D0040EF74 /* ViewController.swift */,
+				8B16412A24180D8D0040EF74 /* Main.storyboard */,
+				8B16413224180D8F0040EF74 /* LaunchScreen.storyboard */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		8BE5F4B52418161600A6154B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8B16413024180D8F0040EF74 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		8BE5F4B62418161900A6154B /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				8BE5F4B92418175900A6154B /* Search.storyboard */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		8BE5F4B7241816B000A6154B /* History */ = {
+			isa = PBXGroup;
+			children = (
+				8BE5F4BB2418176E00A6154B /* History.storyboard */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		8BE5F4B8241816B300A6154B /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				8BE5F4BD2418177900A6154B /* Favorite.storyboard */,
+			);
+			path = Favorite;
 			sourceTree = "<group>";
 		};
 		F81B75146BA5FF14CEDE7C4C /* Frameworks */ = {
@@ -272,6 +321,9 @@
 			files = (
 				8B16413424180D8F0040EF74 /* LaunchScreen.storyboard in Resources */,
 				8B16413124180D8F0040EF74 /* Assets.xcassets in Resources */,
+				8BE5F4BE2418177900A6154B /* Favorite.storyboard in Resources */,
+				8BE5F4BA2418175900A6154B /* Search.storyboard in Resources */,
+				8BE5F4BC2418176E00A6154B /* History.storyboard in Resources */,
 				8B16412C24180D8D0040EF74 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
