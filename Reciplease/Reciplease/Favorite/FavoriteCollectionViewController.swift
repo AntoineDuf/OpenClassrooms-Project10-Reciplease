@@ -7,83 +7,82 @@
 //
 
 import UIKit
-
-private let reuseIdentifier = "Cell"
+import CoreData
 
 class FavoriteCollectionViewController: UICollectionViewController {
+    var viewModel: FavoriteViewModel!
+    var coreDataStack = CoreDataStack(modelName: "Reciplease")
+
+    @IBOutlet weak var favoriteLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureCellSize()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+        let request: NSFetchRequest<MyRecipe> = MyRecipe.fetchRequest()
+        guard let myRecipe = try? coreDataStack.mainContext.fetch(request) else {
+            return
+        }
+        viewModel = FavoriteViewModel(myRecipes: myRecipe, coreDataStack: CoreDataStack(modelName: "Reciplease"))
     }
 
-    /*
-    // MARK: - Navigation
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        viewModel.reloadRecipes()
+        collectionView.reloadData()
+    }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        if let webVC = segue.destination as? WebViewController,
+            let recipe = viewModel.selectedRecipe {
+            webVC.viewModel = WebViewModel(
+                recipe: nil,
+                favoriteRecipe: recipe,
+                openBy: WebViewModel.State.openByFavoriteList
+            )
+        }
     }
 
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        override func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+            if viewModel.recipesCount == 0 {
+                favoriteLabel.isHidden = false
+                return viewModel.recipesCount
+            } else {
+                favoriteLabel.isHidden = true
+            return viewModel.recipesCount
+            }
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "\(FavoriteCollectionViewCell.self)",
+            for: indexPath
+            ) as? FavoriteCollectionViewCell else { fatalError() }
+
+        let recipe = viewModel.recipe(at: indexPath)
+        cell.configureCell(recipe: recipe)
         return cell
     }
 
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectRecipe(at: indexPath)
+        performSegue(withIdentifier: StoryboardSegue.Favorite.showWebViewVC.rawValue,
+                     sender: nil)
     }
-    */
+}
 
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
+extension FavoriteCollectionViewController: UICollectionViewDelegateFlowLayout {
+    func configureCellSize() {
+        let width = (view.frame.width - 30) / 2
+        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+            else { return }
+
+        layout.itemSize = CGSize(width: width, height: width + 42)
     }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }
