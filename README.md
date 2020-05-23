@@ -1,7 +1,7 @@
 # Reciplease
 Reciplease is an iOS application that allows to get a list of revenue indicating the ingredients of your fridge.
 
-<img src="./Screenshot/Search.PNG" width="200" height="450">&nbsp; &nbsp; <img src="./Screenshot/RecipeList.png" width="200" height="450">&nbsp; &nbsp; <img src="./Screenshot/Recipe.png" width="200" height="450">&nbsp; &nbsp; &nbsp; <img src="./Screenshot/FavoriteList.png" width="200" height="450"> 
+<img src="./Screenshot/Search.PNG" width="200" height="450">&nbsp; &nbsp; <img src="./Screenshot/RecipeList.PNG" width="200" height="450">&nbsp; &nbsp; <img src="./Screenshot/Recipe.PNG" width="200" height="450">&nbsp; &nbsp; &nbsp; <img src="./Screenshot/FavoriteList.PNG" width="200" height="450"> 
 
 ## Technical specificities 
 Reciplease is written in Swift 5 and supports iOS 11.0+. Built with Xcode 11.
