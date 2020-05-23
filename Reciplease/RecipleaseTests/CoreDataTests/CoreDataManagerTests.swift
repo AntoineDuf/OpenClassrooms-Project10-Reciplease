@@ -39,7 +39,7 @@ final class CoreDataManagerTests: XCTestCase {
         XCTAssertEqual(coreDataManager.recipes.count, 1)
         XCTAssertEqual(coreDataManager.recipes[0].name, "Tomate mozzarella")
         XCTAssertEqual(coreDataManager.recipes[0].time, 10)
-        XCTAssertEqual(coreDataManager.recipes[0].image,"https://www.google.com")
+        XCTAssertEqual(coreDataManager.recipes[0].image, "https://www.google.com")
         XCTAssertEqual(coreDataManager.recipes[0].url, "https://www.atelierdeschefs.fr/fr/recette/")
         let recipeIsFavorite = coreDataManager.checkIfRecipeIsFavorite(recipeTitle: "Tomate mozzarella")
         XCTAssertTrue(recipeIsFavorite)
