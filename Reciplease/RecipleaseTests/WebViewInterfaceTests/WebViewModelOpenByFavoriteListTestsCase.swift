@@ -7,27 +7,74 @@
 //
 
 import XCTest
+@testable import Reciplease
 
 class WebViewModelOpenByFavoriteListTestsCase: XCTestCase {
+        var viewModel: WebViewModel!
+        var coreDataStack: MockCoreDataStack!
+        var coreDataManager: CoreDataManager!
+        var favoriteRecipe: MyRecipe!
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        override func setUp() {
+            super.setUp()
+            initiateViewModelOpenByFavoriteList()
+        }
+
+    override func tearDown() {
+        viewModel = nil
+        coreDataStack = nil
+        coreDataManager = nil
+        favoriteRecipe = nil
+        super.tearDown()
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+        func testGivenThereIsOneRecipe_WhenGetURLIsCall_ThenMethodReturnURLRequest() {
+            //When
+            let urlRequest = viewModel.getUrl
+            //Then
+            XCTAssertNotNil(urlRequest)
+        }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+        func testGivenTherIsOneRecipeDisplay_WhenSaveRecipeIsCall_ThenRecipeIsSaveInCoredata() {
+            //When
+            viewModel.saveRecipe()
+            //Then
+            XCTAssertNotNil(coreDataManager.recipes)
+        }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        func testGivenTherIsOneRecipeDisplay_WhenDeletRecipeIsCall_ThenRecipeIsDeleteInCoredata() {
+            //When
+            viewModel.deleteRecipe()
+            //Then
+            XCTAssertTrue(coreDataManager.recipes.isEmpty)
+        }
+
+        func testGivenTherIsOneRecipeDisplay_WhenFavoriteButtonImageIsCall_ThenMethodReturnRightImage() {
+            //When
+            let image = viewModel.favoriteButtonImage
+            //Then
+            XCTAssertEqual(image, Asset.heartFill.image)
         }
     }
 
-}
+extension WebViewModelOpenByFavoriteListTestsCase {
+        func initiateCoredataWithOneRecipe() {
+            coreDataStack = MockCoreDataStack()
+            coreDataManager = CoreDataManager(coreDataStack: coreDataStack)
+            coreDataManager.makeRecipe(name: "Tomate mozzarella",
+                                       totalTime: 10,
+                                       image: "https://www.google.com",
+                                       url: "https://www.atelierdeschefs.fr/fr/recette/")
+            favoriteRecipe = coreDataManager.recipes[0]
+        }
+
+        func initiateViewModelOpenByFavoriteList() {
+            initiateCoredataWithOneRecipe()
+            viewModel = WebViewModel(
+                recipe: nil,
+                favoriteRecipe: favoriteRecipe,
+                openBy: .openByFavoriteList,
+                stack: coreDataManager
+            )
+        }
+    }

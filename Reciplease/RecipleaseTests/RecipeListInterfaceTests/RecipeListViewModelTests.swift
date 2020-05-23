@@ -7,27 +7,60 @@
 //
 
 import XCTest
+@testable import Reciplease
 
 class RecipeListViewModelTests: XCTestCase {
+    var viewModel: RecipeListViewModel!
+    var recipes: [Hit] = []
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    override func setUp() {
+        super.setUp()
+        viewModel = RecipeListViewModel(recipes: recipes)
+        addRecipe()
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    override func tearDown() {
+        viewModel = nil
+        super.tearDown()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testGivenThereAreRecipes_WhenRecipesCountIsCall_ThenMethodReturnTen() {
+        //When
+        let recipesCount = viewModel.recipesCount
+        //Then
+        XCTAssertEqual(recipesCount, 10)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testGivenThereAreeRecipes_WhenFirstRecipeURLIsCall_ThenMethodReturnTheRightStringURL() {
+        //When
+        let recipeURL = viewModel.recipeURL(at: IndexPath(row: 0, section: 1))
+        //Then
+        XCTAssertEqual(recipeURL, "http://www.seriouseats.com/recipes/2011/12/chicken-vesuvio-recipe.html")
+    }
+
+    func testGivenThereAreRecipes_WhenFirstRecipeIsCall_ThenMethodReturnTheRecipe() {
+        //When
+        let recipe = viewModel.recipe(at: IndexPath(row: 0, section: 1))
+        //Then
+        XCTAssertNotNil(recipe)
+    }
+
+    func testGivenThereAreRecipes_WhenFirstRecipeIsSelect_ThenMethodSetTheSelectedRecipe() {
+        //When
+        viewModel.didSelectRecipe(at: IndexPath(row: 0, section: 1))
+        //Then
+        XCTAssertEqual(viewModel.selectedRecipe?.recipe.label, "Chicken Vesuvio")
+    }
+}
+
+extension RecipeListViewModelTests {
+    func addRecipe() {
+        if let path = Bundle(for: type(of: self)).path(forResource: "Edamam", ofType: "json") {
+            do {
+                let data = try? Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                let responseJSON = try? JSONDecoder().decode(RecipeData.self, from: data!)
+                self.viewModel.recipes = responseJSON!.hits
+            }
         }
     }
-
 }
