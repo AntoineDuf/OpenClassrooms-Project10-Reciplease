@@ -47,7 +47,7 @@ class RecipeListCollectionViewController: UICollectionViewController {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: L10n.recipeCellName,
+            withReuseIdentifier: "\(RecipeCollectionViewCell.self)",
             for: indexPath
             ) as? RecipeCollectionViewCell else { fatalError() }
 
