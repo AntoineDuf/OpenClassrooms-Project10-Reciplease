@@ -112,6 +112,8 @@ extension SearchViewController {
         searchButtonView.isEnabled = enableSearch
         searchButtonView.backgroundColor = searchColor
         clearButtonView.isHidden = enableClear
+        clearButtonView.layer.cornerRadius = 10
+        searchButtonView.layer.cornerRadius = 10
     }
 }
 
