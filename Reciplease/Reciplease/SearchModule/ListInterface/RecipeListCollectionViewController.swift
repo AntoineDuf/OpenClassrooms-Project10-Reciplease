@@ -10,10 +10,29 @@ import UIKit
 
 class RecipeListCollectionViewController: UICollectionViewController {
     var viewModel: RecipeListViewModel!
+    @IBOutlet weak var noRecipesLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCellSize()
+        if viewModel.recipesCount > 0 {
+            noRecipesLabel.isHidden = true
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        collectionView.reloadData()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let webVC = segue.destination as? WebViewController,
+            let recipe = viewModel.selectedRecipe {
+            webVC.viewModel = WebViewModel(
+                recipe: recipe,
+                favoriteRecipe: nil,
+                openBy: WebViewModel.State.openByRecipeList
+            )
+        }
     }
 
     override func collectionView(
@@ -28,27 +47,18 @@ class RecipeListCollectionViewController: UICollectionViewController {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "recipeCollectionCell",
+            withReuseIdentifier: L10n.recipeCellName,
             for: indexPath
             ) as? RecipeCollectionViewCell else { fatalError() }
 
         let recipe = viewModel.recipe(at: indexPath)
-        cell.configureCell(
-            recipe: recipe
-        )
+        cell.configureCell(recipe: recipe)
         return cell
     }
 
-    override func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-        guard let webVC = storyboard?.instantiateViewController(
-            withIdentifier: "WebViewController"
-            ) as? WebViewController else { return }
-
-        webVC.url = viewModel.recipeURL(at: indexPath)
-        navigationController?.pushViewController(webVC, animated: true)
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectRecipe(at: indexPath)
+        performSegue(withIdentifier: StoryboardSegue.Search.showWebViewVC.rawValue, sender: nil)
     }
 }
 

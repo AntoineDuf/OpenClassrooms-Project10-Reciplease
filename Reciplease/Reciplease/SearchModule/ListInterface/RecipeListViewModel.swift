@@ -8,8 +8,9 @@
 
 import Foundation
 
-struct RecipeListViewModel {
-    private let recipes: [Hit]
+class RecipeListViewModel {
+    var recipes: [Hit]
+    private(set) var selectedRecipe: Hit?
 
     init(recipes: [Hit]) {
         self.recipes = recipes
@@ -29,5 +30,10 @@ extension RecipeListViewModel {
     func recipe(at indexPath: IndexPath) -> Hit {
         let index = indexPath.row
         return recipes[index]
+    }
+
+    func didSelectRecipe(at indexPath: IndexPath) {
+        let index = indexPath.row
+        selectedRecipe = recipes[index]
     }
 }
